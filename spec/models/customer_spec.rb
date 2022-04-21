@@ -20,4 +20,12 @@ RSpec.describe Customer, type: :model do
   # testando se vou criado um customer pela quatidade de customers existente depois da criação
   it { expect{ create(:customer) }.to change {Customer.all.size}.by(1) }
 
+  it 'Usando o attributes_for' do
+    #  attributes_for vai extrair atributos determinada factory
+    attrs = attributes_for(:customer)
+    customer = Customer.create(attrs)
+    expect(customer.full_name).to start_with("Sr. ")
+    puts attrs
+  end
+
 end
