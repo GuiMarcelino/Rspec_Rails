@@ -24,9 +24,6 @@ end
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
 
-  # FactoryBotRails
-  config.include FactoryBot::Syntax::Methods
-
   # FactoryBotLint
   config.before(:suite) do
     FactoryBot.lint

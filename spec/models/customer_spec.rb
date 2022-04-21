@@ -14,12 +14,12 @@ RSpec.describe Customer, type: :model do
   end
 
   it 'sobre-escrever atributos' do
-    customer = create(:customer, name: "Guilherme Marcelino" )
+    customer = create(:customer, name: "Guilherme Marcelino")
     expect(customer.full_name).to eq("Sr. Guilherme Marcelino")
   end
 
   # testando se vou criado um customer pela quatidade de customers existente depois da criação
-  it { expect{ create(:customer) }.to change {Customer.all.size}.by(1) }
+  it { expect { create(:customer) }.to change { Customer.all.size }.by(1) }
 
   it 'Usando o attributes_for' do
     #  attributes_for vai extrair atributos determinada factory
@@ -45,6 +45,14 @@ RSpec.describe Customer, type: :model do
     expect(customer.vip).to eq(true)
   end
 
+  it 'travel to' do
+    travel_to Time.zone.local(2004, 11, 24, 01, 04, 44) do
+      @customer = create(:customer_vip)
+    end
+    puts @customer.created_at
+    puts Time.now
+    expect(@customer.created_at).to be < Time.now
+  end
   it 'Cliente Feminino' do
     customer = create(:customer_female)
     expect(customer.gender).to eq('F')
