@@ -11,6 +11,7 @@ FactoryBot.define do
 
     transient do
       upcased false
+      qtd_orders 3
     end
 
     name Faker::Name.name
@@ -27,6 +28,12 @@ FactoryBot.define do
       days_to_pay 15
     end
 
+    trait :with_orders do
+      after(:create) do |customer, evaluator|
+        create_list(:order, evaluator.qtd_orders, customer: customer)
+      end
+    end
+
     factory :customer_male, traits: [:male]
     factory :customer_female, traits: [:female]
     factory :customer_vip, traits: [:vip]
@@ -35,12 +42,6 @@ FactoryBot.define do
     factory :customer_female_vip, traits: [:female, :vip]
     factory :customer_male_default, traits: [:male, :default]
     factory :customer_female_default, traits: [:female, :default]
-
-
-
-
-
-
 
     after(:create) do |customer, evaluator|
       customer.name.upcase! if evaluator.upcased
