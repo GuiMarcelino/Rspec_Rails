@@ -28,4 +28,10 @@ RSpec.describe Customer, type: :model do
     puts attrs
   end
 
+  it 'Atributo Transitorio' do
+    customer = create(:customer_default, upcased: true)
+    expect(customer.name.upcase).to eq(customer.name)
+  end
+
+
 end
