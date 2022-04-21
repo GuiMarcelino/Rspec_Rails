@@ -4,6 +4,7 @@ RSpec.describe Customer, type: :model do
 
   it 'full_name' do
     customer = create(:user) # por conta do alias podemos usar customer ou user
+    puts customer.email
     expect(customer.full_name).to start_with("Sr. ")
   end
 
