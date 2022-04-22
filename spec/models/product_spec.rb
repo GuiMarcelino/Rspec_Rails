@@ -27,11 +27,23 @@ RSpec.describe Product, type: :model do
     expect(product.errors[:category]).to include("can't be blank")
   end
 
-  # teste método de classe
-  it 'return a product with a full description' do
-    product = create(:product)
-    expect(product.full_description).to eq("#{product.description} - #{product.price}")
+  context  'Instance Methods' do
+    # teste método de classe
+    it 'return a product with a full description' do
+      product = create(:product)
+      expect(product.full_description).to eq("#{product.description} - #{product.price}")
+    end
   end
 
+  context 'Validates' do
+    # validando a presenca dos campos preenchidos com is_expectd usando a gem shoulda matchers
+    it { is_expected.to validate_presence_of(:description) }
+    it { is_expected.to validate_presence_of(:price) }
+    it { is_expected.to validate_presence_of(:category) }
+  end
 
+  context  'Associations' do
+    # testando relacionamento products e categories, pois o produto pertencem a uma categoria.
+    it { is_expected.to belong_to(:category) }
+  end
 end
