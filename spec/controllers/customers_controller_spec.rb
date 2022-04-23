@@ -2,6 +2,12 @@ require 'rails_helper'
 
 RSpec.describe CustomersController, type: :controller do
 
+  context 'Teste Rota' do
+    it 'Route' do
+      is_expected.to route(:get, '/customers').to(action: :index)
+    end
+  end
+
   context 'Testando uma requisição não autenticada' do
 
     it 'responds successfully' do
@@ -41,6 +47,14 @@ RSpec.describe CustomersController, type: :controller do
         expect {
           post :create, params: { customer: customer_params }
         }.to change(Customer, :count).by(1)
+      end
+
+      it 'with invalid attributes' do
+        customer_params = attributes_for(:customer, address: nil)
+        sign_in @member
+        expect {
+          post :create, params: { customer: customer_params }
+        }.not_to change(Customer, :count)
       end
 
       it 'Content-Type JSON' do
