@@ -6,6 +6,7 @@ RSpec.describe CustomersController, type: :controller do
     it 'Route' do
       is_expected.to route(:get, '/customers').to(action: :index)
     end
+
   end
 
   context 'Testando uma requisição não autenticada' do
